@@ -1,4 +1,4 @@
-# INSTRUCTIONS
+## INSTRUCTIONS
 
 1. Create virtual envirement<br>
    1. Command: ```python3 -m venv ./venv``` in the destination folder.
@@ -92,8 +92,86 @@ STATICFILES_DIRS = [
 ````
 Create static folder inside *project* and put all static files.
 15. In terminal type: ````python manage.py collectstatic````, to make a copy from the static files to better understanding of django.
-16. Adjusting HTML files:
+
+
+## Manipulating project Files
+1. Adjusting HTML files:
     1. At the top of the HTML, below `<DOCTYPE html>` type: `{% load static %}`, to include python code and load static folder.
     2. At all paths and src, replace `href=ref` to `href='{% static 'ref' %}`.
-17. Change url references: replace `href=ref` to `href='{% url 'ref' %}`.
-18. add paths to other pages ``page.html`` in *appfolder* -> `urls.py`
+2. Change url references: replace `href=ref` to `href='{% url 'ref' %}`.
+3. add paths to other pages ``page.html`` in *appfolder* -> `urls.py`
+4. To prevent duplicate HTML code, we can create a `base.html` with the head and body JavaScript files:
+````
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta data>
+    ...
+    
+    <!-- Título -->
+    ...
+
+    <!-- Favicon -->
+    ...
+
+    <!-- Stylesheet -->
+    ...
+
+</head>
+<body>
+    {% block content %} {% endblock %}
+    <!-- ##### All Javascript Files ##### -->
+    ...
+</body>
+
+</html>
+````
+Use `{% load static %}` to import static files, and type `{% block content %} {% endblock %}` to the `<body>` tag, to the pace where the `newpage.html` body will be loaded. 
+
+From the `newpage.html`:
+````
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+... inner body code
+
+{% endblock %}
+````
+
+5. To prevent duplicate HTML code, inside `newpage.html`, like menu or footer, we can use partials. Inside templates create folder `partials`, add `footer.html` and `menu.html`.
+
+menu.html:
+````
+{% load static %}
+<!-- ##### Header Area Start ##### -->
+    <header>
+    ...
+    </header>
+````
+footer.html:
+````
+{% load static %}
+<!-- ##### Footer Area Start ##### -->
+    <footer>
+    ...
+    </footer>
+````
+
+To add menu.html and footer.html inside newpage.html, we do:
+From the `newpage.html`:
+````
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+... 
+{% include 'partials/menu.html' %}
+... 
+{% include 'partials/footer.html' %}
+...
+
+{% endblock %}
+````
