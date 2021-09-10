@@ -6,7 +6,7 @@
 2. Install Django
    1. ````pip install django````
    2. Check if it was installed correctly: ````pip freeze```` to view installed folders.
-3. To create project, in terminal: ````django-admin startproject 'projectname'````. Starting the project some files were created, between these files we have:
+3. To create *project*, in terminal: ````django-admin startproject 'projectname'````. Starting the project some files were created, between these files we have:
    1. ````__init__.py```` - serves to determine that the 'project' folder is a package.
    2. ````settings.py```` - this file contais all the project configurations.
    3. ````urls.py```` - contains all the project's links.
@@ -15,8 +15,8 @@
 4. In ````project\settings.py```` change variable: ````TIME_ZONE = 'America/Sao_Paulo'````
 5. Install Pylint plugin in Pycharm
 6. To execute server, in terminal: ````python manage.py runserver````
-7. To create an app, open a new terminal (because the first is running the server): ````python manage.py startapp 'nameapp'````
-8. Add app to project -> Settings : 
+7. To create an *app*, open a new terminal (because the first is running the server): ````python manage.py startapp 'nameapp'````
+8. Add app to *project* -> Settings : 
 ````
 INSTALLED_APPS = [
     'appname',
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 ````
-9. Create ````urls.py```` inside app.
+9. Create ````urls.py```` inside *app*.
 ````
 from django.urls import path
 from . import views
@@ -40,21 +40,60 @@ urlpatterns = [
 10. Add index.html to ````views.py````.
 ````
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse('<h1>Receitas</h1> <h2>Bem Vindo</h2>')
+    return render('request, index.html')
 ````
-11. Add url in ````urls.py```` in project.
+11. Add url in ````urls.py```` in *project*.
 ````
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('recipes.urls')),
+    path('', include('appname.urls')),
 ]
 ````
+12. Create folder ````templates```` in *appfolder*, with ````index.html```` code inside.
+13. Include template path in *project* .
+Go to setting, specify ````DIRS```` in TEMPLATES:
+````
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'appname/templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+````
+14. Include static files in *project* CSS, Javascript, Images, etc.
+In *project* settings go to the end, in ````#Static files````:
+````
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'project/static')
+]
+
+````
+Create static folder inside *project* and put all static files.
+15. In terminal type: ````python manage.py collectstatic````, to make a copy from the static files to better understanding of django.
+16. Adjusting HTML files:
+    1. At the top of the HTML, below `<DOCTYPE html>` type: `{% load static %}`, to include python code and load static folder.
+    2. At all paths and src, replace `href=ref` to `href='{% static 'ref' %}`.
+17. Change url references: replace `href=ref` to `href='{% url 'ref' %}`.
+18. add paths to other pages ``page.html`` in *appfolder* -> `urls.py`
