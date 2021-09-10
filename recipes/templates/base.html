@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 <html lang="en">
 
 <head>
@@ -11,25 +11,25 @@
     <title>Receitas</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{% static 'img/core-img/favicon.png' %}" type="image/png">
+    <link rel="icon" href="{% staticfiles 'img/core-img/favicon.png' %}" type="image/png">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'site.css' %}">
+    <link rel="stylesheet" href="{% staticfiles 'site.css' %}">
 
 </head>
 <body>
     {% block content %} {% endblock %}
     <!-- ##### All Javascript Files ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% staticfiles 'js/jquery/jquery-2.2.4.min.js' %}"></script>
     <!-- Popper js -->
-    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
+    <script src="{% staticfiles 'js/bootstrap/popper.min.js' %}"></script>
     <!-- Bootstrap js -->
-    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% staticfiles 'js/bootstrap/bootstrap.min.js' %}"></script>
     <!-- All Plugins js -->
-    <script src="{% static 'js/plugins/plugins.js'%}"></script>
+    <script src="{% staticfiles 'js/plugins/plugins.js'%}"></script>
     <!-- Active js -->
-    <script src="{% static 'js/active.js' %}"></script>
+    <script src="{% staticfiles 'js/active.js' %}"></script>
 </body>
 
 </html>
