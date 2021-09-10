@@ -99,7 +99,7 @@ Create static folder inside *project* and put all static files.
     1. At the top of the HTML, below `<DOCTYPE html>` type: `{% load static %}`, to include python code and load static folder.
     2. At all paths and src, replace `href=ref` to `href='{% static 'ref' %}`.
 2. Change url references: replace `href=ref` to `href='{% url 'ref' %}`.
-3. add paths to other pages ``page.html`` in *appfolder* -> `urls.py`
+3. add paths to receita page ``receita.html`` in *appfolder* -> `urls.py`
 4. To prevent duplicate HTML code, we can create a `base.html` with the head and body JavaScript files:
 ````
 <!DOCTYPE html>
@@ -128,9 +128,9 @@ Create static folder inside *project* and put all static files.
 
 </html>
 ````
-Use `{% load static %}` to import static files, and type `{% block content %} {% endblock %}` to the `<body>` tag, to the pace where the `newpage.html` body will be loaded. 
+Use `{% load static %}` to import static files, and type `{% block content %} {% endblock %}` to the `<body>` tag, to the pace where the `index.html` body will be loaded. 
 
-From the `newpage.html`:
+From the `index.html`:
 ````
 {% extends 'base.html' %}
 {% load static %}
@@ -141,7 +141,7 @@ From the `newpage.html`:
 {% endblock %}
 ````
 
-5. To prevent duplicate HTML code, inside `newpage.html`, like menu or footer, we can use partials. Inside templates create folder `partials`, add `footer.html` and `menu.html`.
+5. To prevent duplicate HTML code, inside `index.html`, like menu or footer, we can use partials. Inside templates create folder `partials`, add `footer.html` and `menu.html`.
 
 menu.html:
 ````
@@ -160,8 +160,9 @@ footer.html:
     </footer>
 ````
 
-To add menu.html and footer.html inside newpage.html, we do:
-From the `newpage.html`:
+To add menu.html and footer.html inside `index.html`, we do:
+
+index.html:
 ````
 {% extends 'base.html' %}
 {% load static %}
@@ -174,4 +175,50 @@ From the `newpage.html`:
 ...
 
 {% endblock %}
+````
+
+6. Iterating HTML code dynamically.
+
+Inside `index.html` we have a list of recipes displayed, instead of add code by hand, we can use an iterator to load each object html code.
+
+to display 1 recipe we have:
+````
+<!-- Single Best Receipe Area -->
+<div class="col-12 col-sm-6 col-lg-4">
+  <div class="single-best-receipe-area mb-30">
+      <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
+      <div class="receipe-content">
+          <a href="{% url 'receita' %}">
+              <h5>Nome da receita</h5>
+          </a>
+      </div>
+  </div>
+</div>
+````
+we can pass a dictionary in `views.py`.
+````
+def index(request):
+    receitas = {
+        1: 'Lasanha',
+        2: 'Sopa de Legumes',
+        3: 'Sorvete'
+    }
+
+    dados = {
+        'nome_das_receitas': receitas
+    }
+    return render(request, 'index.html', dados)
+````
+To iterate in `index.html`, we do:
+````
+<div class="col-12 col-sm-6 col-lg-4">
+  <div class="single-best-receipe-area mb-30">
+      <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
+      <div class="receipe-content">
+          <a href="{% url 'receita' %}">
+              <h5>Nome da receita</h5>
+          </a>
+      </div>
+  </div>
+</div>
 ````
