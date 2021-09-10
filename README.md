@@ -1,11 +1,11 @@
-## RECIPE MANAGEMENT SYSTEM IN DJANGO
+## Recipe management System in Django
 
 [This is the link to access the Website!](https://restaurant-django-project.herokuapp.com/)
 
 
 
 
-## CRIANDO UM WEB-SITE EM DJANGO DO ZERO!
+## Creating a Django Website from Scratch!
 
 1. Create virtual envirement<br>
    1. Command: ```python3 -m venv ./venv``` in the destination folder.
