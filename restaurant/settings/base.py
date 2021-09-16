@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
-import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,12 +86,12 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgresql-symmetrical-10274'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgresql-symmetrical-10274'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -125,9 +124,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-POSTGRES_URL = "HEROKU_POSTGRESQL_<postgresql-angular-41317>_URL"
-DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
