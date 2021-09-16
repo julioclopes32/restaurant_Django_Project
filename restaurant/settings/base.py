@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgresql-symmetrical-10274'
+        'NAME': 'postgresql-angular-41317'
     }
 }
 
