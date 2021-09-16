@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -76,15 +77,18 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_receitas',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'db_receitas',
+#         'USER': 'postgres',
+#         'PASSWORD': '123456',
+#         'HOST': 'localhost'
+#     }
+# }
+
+POSTGRES_URL = "postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b"
+DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
