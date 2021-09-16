@@ -87,8 +87,13 @@ WSGI_APPLICATION = 'restaurant.wsgi.application'
 #     }
 # }
 
-POSTGRES_URL = "postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b"
-DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
+POSTGRES_URL = "HEROKU_POSTGRESQL_DBNAME_URL"
+
+if 'DATABASES' not in locals():
+    DATABASES = {'default': dj_database_url.config(default='postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b')}
+
+if POSTGRES_URL in os.environ:
+    DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
