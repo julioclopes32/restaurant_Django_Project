@@ -242,7 +242,7 @@ Once opened it's going to be required to set a password and username to a superu
 
 Now, we must set the configurations in our app.
 go to ``app/settings.py`` and change the variable `DATABASES` to:
-``
+````
  DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql',
@@ -252,7 +252,7 @@ go to ``app/settings.py`` and change the variable `DATABASES` to:
          'HOST': 'localhost'
      }
  }
-``
+````
 when done, all is going to be working fine and we can start creating our tables and populating them.
 
 ### Heroku
