@@ -273,24 +273,24 @@ type `heroku addons` to show all existing databases, in case it is empty we must
 #### Creating Database
 to do so, we must type the command ``heroku addons:create heroku-postgresql:hobby-dev``
 to check if all worked fine, type again the command `heroku addons` and something like this should appear:
-``
+````
 Owning App                 Add-on                    Plan                         Price  State  
 ─────────────────────────  ────────────────────────  ───────────────────────────  ─────  ───────
 restaurant-django-project  postgresql-angular-41317  heroku-postgresql:hobby-dev  free   created
-``
+````
 
 #### Syncing to database
 After database is created, we must get its URL that means the correct database path to insert in our `configurations.py`.
 To do so, we must type the command `heroku config:get DATABASE_URL --app restaurant-django-project` don't forget to replace your project name.
 we must get something like this:
-``
+````
 postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b
-``
+````
 
 We must import a library to be capable to access a database from a URL, so in configurations.py at the top of your code type:
-``
+````
 import dj_database_url
-``
+````
 
 change the ``DATABASES`` variable to:
 ````
