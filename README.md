@@ -2,10 +2,7 @@
 
 [This is the link to access the Website!](https://restaurant-django-project.herokuapp.com/)
 
-
-
-
-## CRIANDO UM WEB-SITE EM DJANGO DO ZERO!
+## CREATING A DJANGO WEB-SITE FROM SCRATCH!
 
 1. Create virtual envirement<br>
    1. Command: ```python3 -m venv ./venv``` in the destination folder.
@@ -229,3 +226,82 @@ To iterate in `index.html`, we do:
   </div>
 </div>
 ````
+
+## Syncronyzing Database to PostgreSQL
+
+### LocalHost
+If we want to execute our code in localhost, that means, in our machine only. we must provide the required access to the PostgreSQL server in our local machine.
+For that, we must run a PostgreSQL server in our own machine, and create the database, to do that, we just have to download the PostgreSQL application.
+
+[Download PostgreSQL Server](https://www.postgresql.org/download/)
+
+in my case, I downloaded the windows version.
+
+When installed, we must open the app, look for `pgadmin4` in your machine.
+Once opened it's going to be required to set a password and username to a superuser, and also a password for the database.
+
+Now, we must set the configurations in our app.
+go to ``app/settings.py`` and change the variable `DATABASES` to:
+``
+ DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+         'NAME': 'database_name',
+         'USER': 'postgreSQL_user',
+         'PASSWORD': 'database_password',
+         'HOST': 'localhost'
+     }
+ }
+``
+when done, all is going to be working fine and we can start creating our tables and populating them.
+
+### Heroku
+
+When using heroku, if we want to use a database, we must create a database instance in heroku and sync to the application.
+We must heroku CLI to develop this part, so, make sure to download it.
+
+[Download Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+
+once downloaded, if we use [pycharm](https://www.jetbrains.com/pt-br/pycharm/download/) or [VsCode](https://code.visualstudio.com/download) we must open a terminal in our virtual environment.
+When opened, we must type the command ``heroku login``, after that we must log in to our heroku account.
+
+I won't teach here how to set all the heroku configs, there are other configurations required to load the app, here I will only discuss the database.
+you can see a nice tutorial about how to set all heroku configurations in this [video](https://www.youtube.com/watch?v=f6PVDxCB08A&t=1883s)
+Supposing you app is already running in heroku, this is the next step.
+type `heroku addons` to show all existing databases, in case it is empty we must create a new one.
+
+#### Creating Database
+to do so, we must type the command ``heroku addons:create heroku-postgresql:hobby-dev``
+to check if all worked fine, type again the command `heroku addons` and something like this should appear:
+``
+Owning App                 Add-on                    Plan                         Price  State  
+─────────────────────────  ────────────────────────  ───────────────────────────  ─────  ───────
+restaurant-django-project  postgresql-angular-41317  heroku-postgresql:hobby-dev  free   created
+``
+
+#### Syncing to database
+After database is created, we must get its URL that means the correct database path to insert in our `configurations.py`.
+To do so, we must type the command `heroku config:get DATABASE_URL --app restaurant-django-project` don't forget to replace your project name.
+we must get something like this:
+``
+postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b
+``
+
+We must import a library to be capable to access a database from a URL, so in configurations.py at the top of your code type:
+``
+import dj_database_url
+``
+
+change the ``DATABASES`` variable to:
+````
+POSTGRES_URL = "HEROKU_POSTGRESQL_DBNAME_URL"
+
+if 'DATABASES' not in locals():
+    DATABASES = {'default': dj_database_url.config(default='postgres://fqlucdpkelobxi:fced27c136e71b647f7829090f1f79f8e21e0efeb53e5888e3d8198bf61964c3@ec2-52-203-74-38.compute-1.amazonaws.com:5432/dejrodf9lrff5b')}
+
+if POSTGRES_URL in os.environ:
+    DATABASES = {'default': dj_database_url.config(default=os.environ[POSTGRES_URL])}
+````
+make sure to replace te link to your current database URL in the first part.
+
+
